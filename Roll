@@ -1,0 +1,123 @@
+/**@author Isaac Angle
+ * this class gets 6 different sides of a die from the
+ * internet and then randomly assigns them to a label*/
+package sixSidedDie;
+
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
+import java.util.Random;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
+public class Roll implements Runnable{
+	
+	private ImageIcon side1,side2,side3,side4,side5,side6;
+	private JLabel label;
+	public int sideNum;
+	private int randNum;
+	
+	private Random rand = new Random();
+	@Override  
+	public void run() {
+		label.setIcon(side1);
+		try {
+			
+			//adding first side
+			Toolkit toolkit = Toolkit.getDefaultToolkit();
+			URL imgurl = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Dice-1-b.svg/768px-Dice-1-b.svg.png\r\n");
+			Image img = toolkit.getImage(imgurl);
+			img = img.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+			side1 = new ImageIcon(img);
+			
+			//adding second side
+			Toolkit toolkit2 = Toolkit.getDefaultToolkit();
+			URL imgurl2 = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Dice-2-b.svg/768px-Dice-2-b.svg.png\r\n");
+			Image img2 = toolkit2.getImage(imgurl2);
+			img2 = img2.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+			side2 = new ImageIcon(img2);
+			
+			//adding third side
+			Toolkit toolkit3 = Toolkit.getDefaultToolkit();
+			URL imgurl3 = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/Dice-3-b.svg/480px-Dice-3-b.svg.png");
+			Image img3 = toolkit3.getImage(imgurl3);
+			img3 = img3.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+			side3 = new ImageIcon(img3);
+			
+			//adding fourth side
+			Toolkit toolkit4 = Toolkit.getDefaultToolkit();
+			URL imgurl4 = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Dice-4-b.svg/1024px-Dice-4-b.svg.png");
+			Image img4 = toolkit4.getImage(imgurl4);
+			img4 = img4.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+			side4 = new ImageIcon(img4);
+			
+			//adding fifth side
+			Toolkit toolkit5 = Toolkit.getDefaultToolkit();
+			URL imgurl5 = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Dice-5-b.svg/480px-Dice-5-b.svg.png");
+			Image img5 = toolkit5.getImage(imgurl5);
+			img5 = img5.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+			side5 = new ImageIcon(img5);
+			
+			//adding sixth side
+			Toolkit toolkit6 = Toolkit.getDefaultToolkit();
+			URL imgurl6 = new URL("https://upload.wikimedia.org/wikipedia/commons/thumb/5/5a/Dice-6a-b.svg/1024px-Dice-6a-b.svg.png");
+			Image img6 = toolkit6.getImage(imgurl6);
+			img6 = img6.getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+			side6 = new ImageIcon(img6);
+			
+		}catch(Exception e) {
+			System.out.println("error");
+		}
+		int numTimes = rand.nextInt(25);
+		//randomly chooses between each side of the die
+		for(int i = 0; i < numTimes; i++) {
+			randNum = rand.nextInt(6);
+			
+			switch(randNum) {
+			case 0:
+				label.setIcon(side1);
+				if(i == 39)
+					sideNum = 1;
+				break;
+			case 1:
+				label.setIcon(side2);
+				if(i == 39)
+					sideNum = 2;
+				break;
+			case 2:
+				label.setIcon(side3);
+				if(i == 39)
+					sideNum = 3;
+				break;
+			case 3:
+				label.setIcon(side4);
+				if(i == 39)
+					sideNum = 4;
+				break;
+			case 4:
+				label.setIcon(side5);
+				if(i == 39)
+					sideNum = 5;
+				break;
+			case 5: 
+				label.setIcon(side6);
+				if(i == 39)
+					sideNum = 6;
+				break;
+			}
+			
+			try {
+				Thread.sleep(300);
+			} catch(InterruptedException ex) {
+				System.out.println("error");
+			}
+		}
+		
+		System.out.println("The number on the dice is: " + sideNum);
+		
+	}
+	//default constructor requires a JLabel as a parameter
+	public Roll(JLabel label) {
+		this.label = label;
+	}
+}
