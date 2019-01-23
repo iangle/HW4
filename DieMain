@@ -1,0 +1,74 @@
+/**@author Isaac Angle
+ * This class will run the die simulator through a GUI
+ * It will have a button and will change the side of the die
+ * randomly*/
+package sixSidedDie;
+
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+public class DieMain {
+	private JLabel label;
+	private JFrame frame;
+	int sum = 0;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		DieMain main = new DieMain();
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public DieMain() {
+		//adding a frame so the user can see the labels and button
+		frame = new JFrame();
+		frame.setBounds(200, 200, 500, 400);
+		frame.setSize(1000,500);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		frame.setVisible(true);
+		
+		//creating the button 
+		JButton startbtn = new JButton("Start");
+		frame.add(startbtn);
+		startbtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Roll[] r = new Roll[5];
+				for(int i = 0; i < r.length; i++) {
+					JLabel l = new JLabel();
+					r[i] = new Roll(l);
+					frame.add(l);
+				}
+				//creating the seperate threads and running them
+				Thread[] ts = new Thread[5];
+				for(int i = 0; i < ts.length;i++) {
+					ts[i] = new Thread(r[i]);
+					ts[i].start();
+					try {
+						Thread.sleep(100);
+					}catch(InterruptedException ex) {
+						System.out.println("Error---");
+					}
+					
+					
+				}
+					for(int i = 0; i<ts.length; i++) {
+						sum += r[i].sideNum;
+					}
+				System.out.println("The sum of the dice is: " + sum);
+			}});
+		
+	}
+
+
+
+}
